@@ -20,6 +20,10 @@ Template.postEdit.events({
       url: $(e.target).find('[name=url]').val(),
       title: $(e.target).find('[name=title]').val()
     }
+    
+    var errors = validatePost(postProperties);
+    if (errors.title || errors.url)
+      return Session.set('postEditErrors', errors);
 
     Posts.update(currentPostId, {$set: postProperties}, function(error) {
       if (error) {
